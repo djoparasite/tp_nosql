@@ -1,0 +1,7 @@
+{
+    "require": {
+        "mongodb/mongodb": "^1.5",
+        "twig/twig": "^2.0",
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}

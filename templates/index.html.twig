@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <div class="container-search">
+            <input class="search" placeholder="Search" name="search"/>
+        </div>
+        <div id="values"></div>
+    </div>
+
+{% endblock %}
+
+{% block aside1 %}
+<hr>
+<div>Db name : {{ infos.dbname }}</div>
+<div id="clear-db">Count documents: {{ infos.countDocuments }}</div>
+{% endblock %}
+
+{% block aside2 %}
+    <hr>
+    <div>
+        <p class="btn-clear" onclick="deleteAll()">Clear DB</p>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="../public/js/search.js"></script>
+{% endblock %}

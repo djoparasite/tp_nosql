@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TP flickr</title>
+    {% block css %}<link rel="stylesheet" href="../public/css/style.css">{% endblock %}
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">TP NoSQL</header>
+    <article class="main">
+        {% block body %}{% endblock %}
+    </article>
+    <aside class="aside aside-1">
+        <div>HTML</div>
+        <div>CSS</div>
+        <div>JAVASCRIPT</div>
+        <div>PHP</div>
+        {% block aside1 %}{% endblock %}
+    </aside>
+    <aside class="aside aside-2">
+        <div>COMPOSER</div>
+        <div>MONGODB</div>
+        <div>GUZZLE</div>
+        <div>TWIG</div>
+        {% block aside2 %}{% endblock %}
+    </aside>
+    <footer class="footer">Jonathan, Cheikh, Gwendoline, Anoune, Manuela</footer>
+</div>
+</body>
+{% block javascript %}
+{% endblock %}
+</html>

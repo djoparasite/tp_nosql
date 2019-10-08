@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block css %}<link rel="stylesheet" href="../../public/css/style.css">{% endblock %}
+{% block body %}
+    <div class="container-show">
+
+        <div class="elem">{{ image._id }}</div>
+        <div><img src="{{ image.url }}" alt="img"></div>
+    </div>
+{% endblock %}
+
+ {% block aside2 %}
+     <hr>
+     <div class="btn-clear">
+         <a href="http://localhost:8000">Retour</a>
+     </div>
+ {% endblock %}
