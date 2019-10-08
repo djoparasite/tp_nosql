@@ -47,11 +47,13 @@
  {% endblock %}
 
 {% block footer2 %}
-    <hr>
-    <div class="footer2">
-        <h1>Ce qui suit est la représentation du document stocké dans notre base Mongo</h1>
-        <pre>
-            {{ dump(image) }}
-        </pre>
-    </div>
+    {% if image is defined %}
+        <hr>
+        <div class="footer2">
+            <h1>Ce qui suit est la représentation du document stocké dans notre base Mongo</h1>
+            <pre>
+                {{ dump(image) }}
+            </pre>
+        </div>
+    {% endif %}
 {% endblock %}
