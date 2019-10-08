@@ -117,4 +117,36 @@ class Manager
 
         return $imageRepository->countDocuments();
     }
+
+    /**
+     * @param $img
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getOtherInformations($img)
+    {
+        $response = $this->guzzle->request('GET', "https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=8ace1d78f867284ec1756b03727c8b7d&photo_id=" . $img['_id'] . "&secret=" . $img['secret'] . self::OPTIONS_API);
+        $informations = \GuzzleHttp\json_decode($response->getBody(), true);
+
+        $db = $this->client->selectDatabase("flickr");
+        $imageRepository = $db->images;
+
+
+        // update document to add the owner's information
+        $imageRepository->updateOne(['_id' => $img['_id']], ['$set' => ['owner' =>  $informations['photo']['owner']]]);
+
+        // update document to add their dates
+        foreach ($informations['photo']['dates'] as $key => $date) {
+            try {
+                // try to update document img in mongo
+                $imageRepository->updateOne(['_id' => $img['_id']], ['$set' => [$key => $date]]);
+            } catch (\Exception $exception) {
+                continue;
+            }
+        }
+
+        $image = $imageRepository->find(['_id' => $img['_id']], ['_id' => 1, 'url' => 1]);
+
+        return $image->toArray();
+    }
 }

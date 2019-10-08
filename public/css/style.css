@@ -50,6 +50,7 @@ body {
     .main    { order: 2; }
     .aside-2 { order: 3; }
     .footer  { order: 4; }
+    .footer2  { order: 5; }
 }
 
 body {

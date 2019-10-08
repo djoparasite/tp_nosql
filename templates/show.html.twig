@@ -2,9 +2,40 @@
 {% block css %}<link rel="stylesheet" href="../../public/css/style.css">{% endblock %}
 {% block body %}
     <div class="container-show">
-
-        <div class="elem">{{ image._id }}</div>
+        <div class="elem">Id: {{ image._id }}</div>
         <div><img src="{{ image.url }}" alt="img"></div>
+        {% if image.taken is defined %}
+            <div>
+                Capture: {{ image.taken|date('d-m-Y') }} à {{ image.taken|date('h:m:s') }}
+            </div>
+        {% endif %}
+
+        {% if image.posted is defined %}
+            <div>
+                Publication: {{ image.posted|date('d-m-Y') }} à {{ image.posted|date('h:m:s') }}
+            </div>
+        {% endif %}
+
+        {% if image.lastupdate is defined %}
+            <div>
+                Dernière modification: {{ image.lastupdate|date('d-m-Y') }} à {{ image.lastupdate|date('h:m:s') }}
+            </div>
+        {% endif %}
+        {% if image.owner.username is defined %}
+            <div>
+                username: {{ image.owner.username }}
+            </div>
+        {% endif %}
+        {% if image.owner.realname is defined %}
+            <div>
+                realname: {{ image.owner.realname }}
+            </div>
+        {% endif %}
+        {% if image.owner.location is defined and image.owner.location %}
+            <div>
+                location: {{ image.owner.location }}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -14,3 +45,13 @@
          <a href="http://localhost:8000">Retour</a>
      </div>
  {% endblock %}
+
+{% block footer2 %}
+    <hr>
+    <div class="footer2">
+        <h1>Ce qui suit est la représentation du document stocké dans notre base Mongo</h1>
+        <pre>
+            {{ dump(image) }}
+        </pre>
+    </div>
+{% endblock %}
