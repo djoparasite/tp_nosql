@@ -131,7 +131,6 @@ class Manager
         $db = $this->client->selectDatabase("flickr");
         $imageRepository = $db->images;
 
-
         // update document to add the owner's information
         $imageRepository->updateOne(['_id' => $img['_id']], ['$set' => ['owner' =>  $informations['photo']['owner']]]);
 
