@@ -4,20 +4,43 @@ namespace App\Classes;
 
 use MongoDB\Client;
 
+/**
+ * Class Manager
+ * @package App\Classes
+ */
 class Manager
 {
-    const BASE_URL_API = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=8ace1d78f867284ec1756b03727c8b7d';
+
+    // You have to change it every day
+    const API_KEY = "8ace1d78f867284ec1756b03727c8b7d";
+
+    const BASE_URL_API = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=' . self::API_KEY;
     const OPTIONS_API = '&format=json&nojsoncallback=1';
 
+    /**
+     * @var Client
+     */
     private $client;
+
+    /**
+     * @var \GuzzleHttp\Client
+     */
     private $guzzle;
 
+    /**
+     * Manager constructor.
+     */
     public function __construct()
     {
         $this->client = new Client("mongodb://localhost:27017");
         $this->guzzle = new \GuzzleHttp\Client();
     }
 
+    /**
+     * @param $search
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function handle($search)
     {
         $response = $this->guzzle->request('GET', self::BASE_URL_API . '&tags=' . $search . self::OPTIONS_API);
@@ -28,6 +51,7 @@ class Manager
 
         foreach ($images['photos']['photo'] as $image) {
             try {
+                // try to stock img in mongo
                 $imageRepository->insertOne( ['_id' => $image['id'], 'secret' => $image['secret'] , 'tags' => $search, 'url' => 'https://farm' . $image['farm'] . '.staticflickr.com/' . $image['server'] . '/' . $image['id'] . '_'. $image['secret'] .'.jpg'] );
             } catch (\Exception $exception) {
                 continue;
@@ -52,15 +76,24 @@ class Manager
         ];
     }
 
+    /**
+     * @param $id
+     * @return array
+     * Get an image thanks to the ID's image from mongo
+     */
     public function getPhotoById($id)
     {
         $db = $this->client->selectDatabase("flickr");
+
         $imageRepository = $db->images;
         $image = $imageRepository->find(['_id' => $id], ['_id' => 1, 'url' => 1]);
 
         return $image->toArray();
     }
 
+    /**
+     * @return array
+     */
     public function getInfosDb()
     {
         $db = $this->client->selectDatabase("flickr");
@@ -72,6 +105,10 @@ class Manager
         ];
     }
 
+    /**
+     * @return int
+     * Clear db collection images
+     */
     public function clearDb()
     {
         $db = $this->client->selectDatabase("flickr");

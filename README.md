@@ -24,6 +24,10 @@ open another one terminal and run: ```mongod```
 
 On your browser go to: ```http://localhost:8000```
 
+### Be careful
+
+In the Class **Manager**, You should change the value of constant "API_KEY" 
+
 ### Groupe
 
 * DELERAY Jonathan
