@@ -5,13 +5,13 @@ input.addEventListener('input', updateValue);
 function updateValue(e) {
     const input = document.querySelector('input');
     if (input.value.length >= 3) {
-        submitForm(e)
+        search(e)
     } else  {
         document.getElementById("values").innerHTML = '';
     }
 }
 
-function submitForm(e)
+function search(e)
 {
     var xhr = new XMLHttpRequest();
     var values = document.getElementById('values');

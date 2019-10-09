@@ -12,7 +12,7 @@ class Manager
 {
 
     // You have to change it every day
-    const API_KEY = "8ace1d78f867284ec1756b03727c8b7d";
+    const API_KEY = "21918178cf10baf619b096c35021291e";
 
     const BASE_URL_API = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=' . self::API_KEY;
     const OPTIONS_API = '&format=json&nojsoncallback=1';
@@ -125,7 +125,7 @@ class Manager
      */
     public function getOtherInformations($img)
     {
-        $response = $this->guzzle->request('GET', "https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=8ace1d78f867284ec1756b03727c8b7d&photo_id=" . $img['_id'] . "&secret=" . $img['secret'] . self::OPTIONS_API);
+        $response = $this->guzzle->request('GET', "https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=" . self::API_KEY . "&photo_id=" . $img['_id'] . "&secret=" . $img['secret'] . self::OPTIONS_API);
         $informations = \GuzzleHttp\json_decode($response->getBody(), true);
 
         $db = $this->client->selectDatabase("flickr");
